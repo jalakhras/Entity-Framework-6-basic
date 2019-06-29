@@ -246,5 +246,17 @@ namespace ConsoleApp2
             }
 
         }
+
+        private static void ProjectionQuery()
+        {
+            using (var context = new NinjaContext())
+            {
+                context.Database.Log = Console.WriteLine;
+                var ninjas = context.Ninjas
+                    .Select(n => new { n.Name, n.DateOfBirth, n.EquipmentOwned })
+                    .ToList();
+
+            }
+        }
     }
 }
