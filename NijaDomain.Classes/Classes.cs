@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using NijaDomain.Classes.Enum;
+using System.Collections.Generic;
 
 namespace NijaDomain.Classes
 {
