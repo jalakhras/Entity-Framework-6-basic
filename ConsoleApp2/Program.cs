@@ -122,5 +122,34 @@ namespace ConsoleApp2
                 context.SaveChanges();
             }
         }
+
+        private static void RetrieveDataWithFind()
+        {
+            var keyval = 4;
+            using (var context = new NinjaContext())
+            {
+                context.Database.Log = Console.WriteLine;
+                var ninja = context.Ninjas.Find(keyval);
+                Console.WriteLine("After Find#1:" + ninja.Name);
+
+                var someNinja = context.Ninjas.Find(keyval);
+                Console.WriteLine("After Find#2:" + someNinja.Name);
+                ninja = null;
+            }
+        }
+
+        private static void RetrieveDataWithStoredProc()
+        {
+
+            using (var context = new NinjaContext())
+            {
+                context.Database.Log = Console.WriteLine;
+                var ninjas = context.Ninjas.SqlQuery("exec GetOldNinjas").ToList();
+                //foreach (var ninja in ninjas)
+                //{
+                //    Console.WriteLine(ninja.Name);
+                //}
+            }
+        }
     }
 }
