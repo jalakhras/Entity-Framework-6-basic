@@ -12,10 +12,10 @@ namespace ConsoleApp2
         static void Main(string[] args)
         {
             Database.SetInitializer(new NullDatabaseInitializer<NinjaContext>());
-          //  InsertNinja();
+            // InsertNinja();
             // InsertMultipleNinjas();
-            SimpleNinjaQueries();
-            //QueryAndUpdateNinja();
+            //  SimpleNinjaQueries();
+            QueryAndUpdateNinja();
             //DeleteNinja();
             //RetrieveDataWithFind();
             //RetrieveDataWithStoredProc();
@@ -51,21 +51,21 @@ namespace ConsoleApp2
 
         private static void InsertMultipleNinjas()
         {
-            var ninja1 = new Ninja
+            Ninja ninja1 = new Ninja
             {
                 Name = "Leonardo",
                 ServedInOniwaban = false,
                 DateOfBirth = new DateTime(1984, 1, 1),
                 ClanId = 1
             };
-            var ninja2 = new Ninja
+            Ninja ninja2 = new Ninja
             {
                 Name = "Raphael",
                 ServedInOniwaban = false,
                 DateOfBirth = new DateTime(1985, 1, 1),
                 ClanId = 1
             };
-            using (var context = new NinjaContext())
+            using (NinjaContext context = new NinjaContext())
             {
                 context.Database.Log = Console.WriteLine;
                 context.Ninjas.AddRange(new List<Ninja> { ninja1, ninja2 });
@@ -75,20 +75,51 @@ namespace ConsoleApp2
 
         private static void SimpleNinjaQueries()
         {
-            using (var context = new NinjaContext())
+            using (NinjaContext context = new NinjaContext())
             {
                 context.Database.Log = Console.WriteLine;
-                var ninjas = context.Ninjas
+                IQueryable<Ninja> ninjas = context.Ninjas
                     .Where(n => n.DateOfBirth >= new DateTime(1984, 1, 1))
                     .OrderBy(n => n.Name)
                     .Skip(1).Take(1);
 
                 //var query = context.Ninjas;
                 // var someninjas = query.ToList();
-                foreach (var ninja in ninjas)
+                foreach (Ninja ninja in ninjas)
                 {
                     Console.WriteLine(ninja.Name);
                 }
+            }
+        }
+
+        private static void QueryAndUpdateNinja()
+        {
+            using (NinjaContext context = new NinjaContext())
+            {
+                context.Database.Log = Console.WriteLine;
+                Ninja ninja = context.Ninjas.FirstOrDefault();
+                ninja.ServedInOniwaban = (!ninja.ServedInOniwaban);
+                context.SaveChanges();
+            }
+        }
+
+        private static void QueryAndUpdateNinjaDisconnected()
+        {
+            Ninja ninja;
+            using (var context = new NinjaContext())
+            {
+                context.Database.Log = Console.WriteLine;
+                ninja = context.Ninjas.FirstOrDefault();
+            }
+
+            ninja.ServedInOniwaban = (!ninja.ServedInOniwaban);
+
+            using (var context = new NinjaContext())
+            {
+                context.Database.Log = Console.WriteLine;
+                context.Ninjas.Attach(ninja);
+                context.Entry(ninja).State = EntityState.Modified;
+                context.SaveChanges();
             }
         }
     }
