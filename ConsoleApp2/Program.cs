@@ -1,4 +1,5 @@
 using NijaDomain.Classes;
+using NijaDomain.Classes.Enum;
 using NinjaDomain.DataModel;
 using System;
 using System.Collections.Generic;
@@ -16,14 +17,14 @@ namespace ConsoleApp2
             // InsertMultipleNinjas();
             // SimpleNinjaQueries();
             //QueryAndUpdateNinja();
-            DeleteNinja();
+           // DeleteNinja();
             //RetrieveDataWithFind();
             //RetrieveDataWithStoredProc();
             //DeleteNinjaWithKeyValue();
             //DeleteNinjaViaStoredProcedure();
             //QueryAndUpdateNinjaDisconnected();
 
-            //InsertNinjaWithEquipment();
+            InsertNinjaWithEquipment();
             //SimpleNinjaGraphQuery();
             //ProjectionQuery();
             //QueryAndUpdateNinjaDisconnected();
@@ -193,6 +194,57 @@ namespace ConsoleApp2
                 context.Database.ExecuteSqlCommand(
                     "exec DeleteNinjaViaId {0}", keyval);
             }
+        }
+
+        private static void InsertNinjaWithEquipment()
+        {
+            using (var context = new NinjaContext())
+            {
+                context.Database.Log = Console.WriteLine;
+
+                var ninja = new Ninja
+                {
+                    Name = "Kacy Catanzaro",
+                    ServedInOniwaban = false,
+                    DateOfBirth = new DateTime(1990, 1, 14),
+                    ClanId = 1
+                };
+                var muscles = new NinjaEquipment
+                {
+                    Name = "Muscles",
+                    Type = EquipmentType.Tool,
+
+                };
+                var spunk = new NinjaEquipment
+                {
+                    Name = "Spunk",
+                    Type = EquipmentType.Weapon
+                };
+
+                ninja.EquipmentOwned.Add(muscles);
+                ninja.EquipmentOwned.Add(spunk);
+                context.Ninjas.Add(ninja);
+                context.SaveChanges();
+            }
+
+        }
+
+        private static void SimpleNinjaGraphQuery()
+        {
+            using (var context = new NinjaContext())
+            {
+                context.Database.Log = Console.WriteLine;
+
+                //var ninjas = context.Ninjas.Include(n => n.EquipmentOwned)
+                //    .FirstOrDefault(n => n.Name.StartsWith("Kacy"));
+
+                var ninja = context.Ninjas
+                           .FirstOrDefault(n => n.Name.StartsWith("Kacy"));
+                Console.WriteLine("Ninja Retrieved:" + ninja.Name);
+                //context.Entry(ninja).Collection(n => n.EquipmentOwned).Load();
+                Console.WriteLine("Ninja Equipment cout {0}", ninja.EquipmentOwned.Count());
+            }
+
         }
     }
 }
