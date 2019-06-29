@@ -17,7 +17,7 @@ namespace ConsoleApp2
             // InsertMultipleNinjas();
             // SimpleNinjaQueries();
             //QueryAndUpdateNinja();
-           // DeleteNinja();
+            // DeleteNinja();
             //RetrieveDataWithFind();
             //RetrieveDataWithStoredProc();
             //DeleteNinjaWithKeyValue();
@@ -198,24 +198,24 @@ namespace ConsoleApp2
 
         private static void InsertNinjaWithEquipment()
         {
-            using (var context = new NinjaContext())
+            using (NinjaContext context = new NinjaContext())
             {
                 context.Database.Log = Console.WriteLine;
 
-                var ninja = new Ninja
+                Ninja ninja = new Ninja
                 {
                     Name = "Kacy Catanzaro",
                     ServedInOniwaban = false,
                     DateOfBirth = new DateTime(1990, 1, 14),
                     ClanId = 1
                 };
-                var muscles = new NinjaEquipment
+                NinjaEquipment muscles = new NinjaEquipment
                 {
                     Name = "Muscles",
                     Type = EquipmentType.Tool,
 
                 };
-                var spunk = new NinjaEquipment
+                NinjaEquipment spunk = new NinjaEquipment
                 {
                     Name = "Spunk",
                     Type = EquipmentType.Weapon
@@ -231,14 +231,14 @@ namespace ConsoleApp2
 
         private static void SimpleNinjaGraphQuery()
         {
-            using (var context = new NinjaContext())
+            using (NinjaContext context = new NinjaContext())
             {
                 context.Database.Log = Console.WriteLine;
 
                 //var ninjas = context.Ninjas.Include(n => n.EquipmentOwned)
                 //    .FirstOrDefault(n => n.Name.StartsWith("Kacy"));
 
-                var ninja = context.Ninjas
+                Ninja ninja = context.Ninjas
                            .FirstOrDefault(n => n.Name.StartsWith("Kacy"));
                 Console.WriteLine("Ninja Retrieved:" + ninja.Name);
                 //context.Entry(ninja).Collection(n => n.EquipmentOwned).Load();
@@ -249,7 +249,7 @@ namespace ConsoleApp2
 
         private static void ProjectionQuery()
         {
-            using (var context = new NinjaContext())
+            using (NinjaContext context = new NinjaContext())
             {
                 context.Database.Log = Console.WriteLine;
                 var ninjas = context.Ninjas
@@ -257,6 +257,58 @@ namespace ConsoleApp2
                     .ToList();
 
             }
+        }
+
+        private static void ReseedDatabase()
+        {
+            Database.SetInitializer(new DropCreateDatabaseAlways<NinjaContext>());
+            using (NinjaContext context = new NinjaContext())
+            {
+                context.Clans.Add(new Clan { ClanName = "Vermont Clan" });
+                Ninja j = new Ninja
+                {
+                    Name = "JulieSan",
+                    ServedInOniwaban = false,
+                    DateOfBirth = new DateTime(1980, 1, 1),
+                    ClanId = 1
+
+                };
+                Ninja s = new Ninja
+                {
+                    Name = "SampsonSan",
+                    ServedInOniwaban = false,
+                    DateOfBirth = new DateTime(2008, 1, 28),
+                    ClanId = 1
+
+                };
+                Ninja l = new Ninja
+                {
+                    Name = "Leonardo",
+                    ServedInOniwaban = false,
+                    DateOfBirth = new DateTime(1984, 1, 1),
+                    ClanId = 1
+                };
+                Ninja r = new Ninja
+                {
+                    Name = "Raphael",
+                    ServedInOniwaban = false,
+                    DateOfBirth = new DateTime(1985, 1, 1),
+                    ClanId = 1
+                };
+                context.Ninjas.AddRange(new List<Ninja> { j, s, l, r });
+                context.SaveChanges();
+                context.Database.ExecuteSqlCommand(
+                  @"CREATE PROCEDURE GetOldNinjas
+                    AS  SELECT * FROM Ninjas WHERE DateOfBirth<='1/1/1980'");
+
+                context.Database.ExecuteSqlCommand(
+                   @"CREATE PROCEDURE DeleteNinjaViaId
+                     @Id int
+                     AS
+                     DELETE from Ninjas Where Id = @id
+                     RETURN @@rowcount");
+            }
+
         }
     }
 }
