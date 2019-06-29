@@ -14,9 +14,9 @@ namespace ConsoleApp2
             Database.SetInitializer(new NullDatabaseInitializer<NinjaContext>());
             // InsertNinja();
             // InsertMultipleNinjas();
-            //  SimpleNinjaQueries();
-            QueryAndUpdateNinja();
-            //DeleteNinja();
+            // SimpleNinjaQueries();
+            //QueryAndUpdateNinja();
+            DeleteNinja();
             //RetrieveDataWithFind();
             //RetrieveDataWithStoredProc();
             //DeleteNinjaWithKeyValue();
@@ -106,7 +106,7 @@ namespace ConsoleApp2
         private static void QueryAndUpdateNinjaDisconnected()
         {
             Ninja ninja;
-            using (var context = new NinjaContext())
+            using (NinjaContext context = new NinjaContext())
             {
                 context.Database.Log = Console.WriteLine;
                 ninja = context.Ninjas.FirstOrDefault();
@@ -114,7 +114,7 @@ namespace ConsoleApp2
 
             ninja.ServedInOniwaban = (!ninja.ServedInOniwaban);
 
-            using (var context = new NinjaContext())
+            using (NinjaContext context = new NinjaContext())
             {
                 context.Database.Log = Console.WriteLine;
                 context.Ninjas.Attach(ninja);
@@ -125,14 +125,14 @@ namespace ConsoleApp2
 
         private static void RetrieveDataWithFind()
         {
-            var keyval = 4;
-            using (var context = new NinjaContext())
+            int keyval = 4;
+            using (NinjaContext context = new NinjaContext())
             {
                 context.Database.Log = Console.WriteLine;
-                var ninja = context.Ninjas.Find(keyval);
+                Ninja ninja = context.Ninjas.Find(keyval);
                 Console.WriteLine("After Find#1:" + ninja.Name);
 
-                var someNinja = context.Ninjas.Find(keyval);
+                Ninja someNinja = context.Ninjas.Find(keyval);
                 Console.WriteLine("After Find#2:" + someNinja.Name);
                 ninja = null;
             }
@@ -141,14 +141,57 @@ namespace ConsoleApp2
         private static void RetrieveDataWithStoredProc()
         {
 
-            using (var context = new NinjaContext())
+            using (NinjaContext context = new NinjaContext())
             {
                 context.Database.Log = Console.WriteLine;
-                var ninjas = context.Ninjas.SqlQuery("exec GetOldNinjas").ToList();
+                List<Ninja> ninjas = context.Ninjas.SqlQuery("exec GetOldNinjas").ToList();
                 //foreach (var ninja in ninjas)
                 //{
                 //    Console.WriteLine(ninja.Name);
                 //}
+            }
+        }
+
+        private static void DeleteNinja()
+        {
+            Ninja ninja;
+            using (NinjaContext context = new NinjaContext())
+            {
+                context.Database.Log = Console.WriteLine;
+                ninja = context.Ninjas.FirstOrDefault();
+                //context.Ninjas.Remove(ninja);
+                //context.SaveChanges();
+            }
+            using (NinjaContext context = new NinjaContext())
+            {
+                context.Database.Log = Console.WriteLine;
+                //context.Ninjas.Attach(ninja);
+                //context.Ninjas.Remove(ninja);
+                context.Entry(ninja).State = EntityState.Deleted;
+                context.SaveChanges();
+            }
+        }
+
+        private static void DeleteNinjaWithKeyValue()
+        {
+            int keyval = 1;
+            using (NinjaContext context = new NinjaContext())
+            {
+                context.Database.Log = Console.WriteLine;
+                Ninja ninja = context.Ninjas.Find(keyval);
+                context.Ninjas.Remove(ninja);
+                context.SaveChanges();
+            }
+        }
+
+        private static void DeleteNinjaViaStoredProcedure()
+        {
+            int keyval = 3;
+            using (NinjaContext context = new NinjaContext())
+            {
+                context.Database.Log = Console.WriteLine;
+                context.Database.ExecuteSqlCommand(
+                    "exec DeleteNinjaViaId {0}", keyval);
             }
         }
     }
