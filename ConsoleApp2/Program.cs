@@ -24,8 +24,8 @@ namespace ConsoleApp2
             //DeleteNinjaViaStoredProcedure();
             //QueryAndUpdateNinjaDisconnected();
 
-            InsertNinjaWithEquipment();
-            //SimpleNinjaGraphQuery();
+           // InsertNinjaWithEquipment();
+            SimpleNinjaGraphQuery();
             //ProjectionQuery();
             //QueryAndUpdateNinjaDisconnected();
 

@@ -10,6 +10,10 @@ namespace NinjaDomain.DataModel
 {
     public class NinjaContext : DbContext
     {
+        public NinjaContext()
+        {
+            this.Configuration.LazyLoadingEnabled = true;
+        }
         public DbSet<Ninja> Ninjas { get; set; }
         public DbSet<Clan> Clans { get; set; }
         public DbSet<NinjaEquipment> Equipment { get; set; }
