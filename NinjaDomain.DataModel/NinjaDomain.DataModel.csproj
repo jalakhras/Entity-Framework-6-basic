@@ -48,6 +48,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConnectedRepository.cs" />
+    <Compile Include="DataHelpers.cs" />
+    <Compile Include="DisconnectedRepository.cs" />
     <Compile Include="Migrations\201906291913568_Initial.cs" />
     <Compile Include="Migrations\201906291913568_Initial.Designer.cs">
       <DependentUpon>201906291913568_Initial.cs</DependentUpon>
@@ -55,6 +58,14 @@
     <Compile Include="Migrations\201906291922077_AddDateOfBirthToNinja.cs" />
     <Compile Include="Migrations\201906291922077_AddDateOfBirthToNinja.Designer.cs">
       <DependentUpon>201906291922077_AddDateOfBirthToNinja.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906301950509_Add-ModificationHistory.cs" />
+    <Compile Include="Migrations\201906301950509_Add-ModificationHistory.Designer.cs">
+      <DependentUpon>201906301950509_Add-ModificationHistory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906301955387_Ignore-IsDirty.cs" />
+    <Compile Include="Migrations\201906301955387_Ignore-IsDirty.Designer.cs">
+      <DependentUpon>201906301955387_Ignore-IsDirty.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="NinjaContext.cs" />
@@ -72,6 +83,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906291922077_AddDateOfBirthToNinja.resx">
       <DependentUpon>201906291922077_AddDateOfBirthToNinja.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906301950509_Add-ModificationHistory.resx">
+      <DependentUpon>201906301950509_Add-ModificationHistory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906301955387_Ignore-IsDirty.resx">
+      <DependentUpon>201906301955387_Ignore-IsDirty.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
