@@ -1,11 +1,18 @@
-﻿using NijaDomain.Classes;
-using NinjaDomain.DataModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Web;
+using System.Net.Http;
+using System.Web.Http;
+using System.Web.Http.Description;
 using System.Web.Mvc;
+using NijaDomain.Classes;
+using NinjaDomain.DataModel;
+using ActionNameAttribute = System.Web.Http.ActionNameAttribute;
+using HttpPostAttribute = System.Web.Http.HttpPostAttribute;
 
 namespace MVCAppRepository.Controllers
 {
@@ -104,7 +111,7 @@ namespace MVCAppRepository.Controllers
         }
 
         // POST: Ninjas/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [System.Web.Http.HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
