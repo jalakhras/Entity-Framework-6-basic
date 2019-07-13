@@ -15,7 +15,7 @@ namespace NijaDomain.Classes
         public bool ServedInOniwaban { get; set; }
         public Clan Clan { get; set; }
         public int ClanId { get; set; }
-        public virtual List<NinjaEquipment> EquipmentOwned { get; set; }
+        public  ICollection<NinjaEquipment> EquipmentOwned { get; set; }
         public DateTime DateOfBirth { get; set; }
         public DateTime DateModified { get; set; }
         public DateTime DateCreated { get; set; }
