@@ -15,6 +15,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVCAppNinjaOnly", "..\MVC5A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVCAppRepository", "..\MVCAppRepository\MVCAppRepository.csproj", "{F0175134-468D-4F59-BFC3-B1E6FD4B92E0}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web API", "Web API", "{3A5A8D12-5B8B-400C-B940-2988045E5BA8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPIs", "..\WebAPIs\WebAPIs.csproj", "{05410247-1393-41EE-BC18-103AF7C59B0D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +45,10 @@ Global
 		{F0175134-468D-4F59-BFC3-B1E6FD4B92E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F0175134-468D-4F59-BFC3-B1E6FD4B92E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F0175134-468D-4F59-BFC3-B1E6FD4B92E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05410247-1393-41EE-BC18-103AF7C59B0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05410247-1393-41EE-BC18-103AF7C59B0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05410247-1393-41EE-BC18-103AF7C59B0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05410247-1393-41EE-BC18-103AF7C59B0D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -48,6 +56,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{E9B8AD4B-B83B-4F2E-ABD3-A5374F09C7F9} = {FBDEAD45-730A-47F9-9368-46ACEDA8192C}
 		{F0175134-468D-4F59-BFC3-B1E6FD4B92E0} = {FBDEAD45-730A-47F9-9368-46ACEDA8192C}
+		{05410247-1393-41EE-BC18-103AF7C59B0D} = {3A5A8D12-5B8B-400C-B940-2988045E5BA8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FE5004F7-7C53-438E-A2EE-CBB0C1688607}
